@@ -29,7 +29,6 @@ app.post('/add', (req, res) => {
   res.redirect('/');  
 });
 
-
 app.post('/toggle/:id', (req, res) => {
   const taskId = parseInt(req.params.id);
   const task = tasks.find(t => t.id === taskId);
@@ -49,4 +48,10 @@ app.post('/remove/:id', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+});
+
+app.get('/', (req, res) => {
+
+  const tasks = getTasksFromDatabaseOrSession(); 
+  res.render('index', { tasks: tasks });
 });
