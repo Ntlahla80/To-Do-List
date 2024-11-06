@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>To-Do List</title>
+    <style>
+
+* {
+     margin: 0;
+     padding: 0;
+     font-family: 'Poppins', sans-serif;
+     box-sizing: border-box;
+ }
+ 
+
+ .task-container {
+     width: 100%;
+     min-height: 100vh;
+     background: linear-gradient(135deg, #153677, #4e085f);
+     padding: 10px;
+ }
+ 
+
+ .todo-app {
+     width: 100%;
+     max-width: 600px;
+     margin: 0 auto;
+     background: #fff;
+     border-radius: 10px;
+     padding: 40px 30px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ }
+ 
+
+ .todo-app h2 {
+     color: #002765;
+     display: flex;
+     align-items: center;
+     margin-bottom: 20px;
+     font-size: 24px;
+ }
+ 
+ .todo-app h2 img {
+     width: 40px;
+     margin-left: 10px;
+ }
+ 
+
+ .row {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     background: #edeef0;
+     border-radius: 30px;
+     padding-left: 20px;
+     margin-bottom: 20px;
+ }
+ 
+ input {
+     flex: 1;
+     border: none;
+     background: transparent;
+     padding: 10px;
+     font-weight: 14px;
+     font-size: 16px;
+ }
+ 
+ button {
+     border: none;
+     outline: none;
+     padding: 12px 30px;
+     background: #153677;
+     color: #fff;
+     font-size: 16px;
+     cursor: pointer;
+     border-radius: 40px;
+     transition: background-color 0.3s ease;
+ }
+ 
+ button:hover {
+     background-color: #4e085f;
+ }
+ 
+
+ .task-item {
+     width: 100%;
+     max-width: 540px;
+     background: #fff;
+     margin: 20px auto;
+     padding: 30px 30px 50px;
+     border-radius: 10px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     position: relative;
+ }
+ 
+ .task-name {
+     font-size: 18px;
+     color: #333;
+ }
+ 
+
+ .completed {
+    color: #555;
+    text-decoration: none; /* Remove the default line-through */
+    position: relative;
+}
+
+.completed::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;   /* Makes the line thicker (bold effect) */
+    background-color: #000;  /* Line color */
+}
+ 
+
+ .task-actions {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+ }
+ 
+ .task-toggle-button,
+ .task-remove-button {
+     border: none;
+     padding: 8px 16px;
+     background: #153677;
+     color: white;
+     font-size: 14px;
+     cursor: pointer;
+     border-radius: 20px;
+     transition: background-color 0.3s ease;
+ }
+ 
+ .task-toggle-button:hover,
+ .task-remove-button:hover {
+     background-color: #4e085f;
+ }
+ 
+
+ ul li {
+     list-style: none;
+     font-size: 17px;
+     padding: 12px 8px 12px 50px;
+     user-select: none;
+     cursor: pointer;
+     position: relative;
+ }
+ 
+ .completed::before {
+     content: '';
+     position: absolute;
+     height: 28px;
+     width: 28px;
+     border-radius: 50%;
+     background-image: url(images/unchecked1.png);
+     background-size: cover;
+     background-position: center;
+     top: 12px;
+     left: 8px;
+ }
+ 
+ ul li.checked::before {
+     background-image: url(images/checked.png);
+ }
+ 
+
+
+
+    </style>
+</head>
+<body>
+   <div class="task-container">
+    <div class="todo-app">
+        <h2>To-do List ></h2>
+
+        
+        <form action="/add" method="POST" class="row">
+            <input type="text" name="task" id="input-box" placeholder="Add your text" required>
+            <button type="submit">Add</button>
+        </form>
+
+      
+        <div class="task-list">
+            <% tasks.forEach(task => { %>
+                <div class="task-item <%= task.checked ? 'completed' : '' %>">
+                    <div class="task-name">
+                        <span><%= task.name %></span>
+                    </div>
+                    <div class="task-actions">
+                       
+                        <form action="/toggle/<%= task.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="task-toggle-button"><%= task.checked ? 'Uncheck' : 'Check' %></button>
+                        </form>
+
+                      
+                        <form action="/remove/<%= task.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="task-remove-button">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+   </div>
+
+</body>
+</html>
