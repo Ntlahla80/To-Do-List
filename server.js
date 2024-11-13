@@ -1,19 +1,57 @@
-
-const express = require('express');
-const path = require('path');
+import express from 'express';
 
 const app = express();
 const port = 3000;
 
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+
+app.set('view engine', 'ejs');  
+
+let tasks = [];
 
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.render('index', { tasks }); 
+});
+
+
+app.post('/add', (req, res) => {
+  const { task } = req.body;  
+  if (task) {
+    const newTask = {
+      id: Date.now(),  
+      name: task,
+      checked: false,  
+    };
+    tasks.push(newTask);
+  }
+  res.redirect('/');  
+});
+
+app.post('/toggle/:id', (req, res) => {
+  const taskId = parseInt(req.params.id);
+  const task = tasks.find(t => t.id === taskId);
+  if (task) {
+    task.checked = !task.checked;  
+  }
+  res.redirect('/');  
+});
+
+
+app.post('/remove/:id', (req, res) => {
+  const taskId = parseInt(req.params.id);
+  tasks = tasks.filter(t => t.id !== taskId);  
+  res.redirect('/');  
 });
 
 
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
+});
+
+app.get('/', (req, res) => {
+
+  const tasks = getTasksFromDatabaseOrSession(); 
+  res.render('index', { tasks: tasks });
 });
