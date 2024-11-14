@@ -1,7 +1,8 @@
-
-
-
 # To-Do List Application
+![Screenshot (3)](https://github.com/user-attachments/assets/f0cc3de7-5bd6-42b0-ab1f-cd636ef47b27)
+![Screenshot (4)](https://github.com/user-attachments/assets/5b86ea5a-d534-4848-bb0f-8e32cbffdb15)
+![Screenshot (5)](https://github.com/user-attachments/assets/cc3387c4-0c38-40fa-9870-6ed46cca3f81)
+![Screenshot (6)](https://github.com/user-attachments/assets/59e224a7-5aa4-4576-a361-e5798371140d)
 
 This is a simple To-Do List web application built using **Node.js** and **Express**, with the frontend rendered using **EJS** templates. It allows users to:
 
